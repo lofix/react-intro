@@ -8,7 +8,8 @@ class App extends Component {
       { name: 'Max', age: 28},
       { name: 'Manu', age: 29},
       { name: 'Stephanie', age: 26}
-    ]
+    ],
+    showPeople: true
   }
 
   switchNameHandler = (newName) => {
@@ -31,22 +32,33 @@ class App extends Component {
     })
   }
 
+  togglePeopleHandler= () => {
+    const currentState = this.state.showPeople;
+    this.setState({
+      showPeople: !currentState
+    });
+  }
+
   render() {
+
+    let people = null;
+
+    if (this.state.showPeople) {
+      people = (
+        <div>
+          {this.state.persons.map(person => {
+              return <Person
+                name={person.name}
+                age={person.age} />
+          })}
+        </div>
+      );
+    }
     return (
       <div className="App">
-        <h1>Hi</h1>
-        <button onClick ={this.switchNameHandler.bind(this, "MAXXX")} >Switch Name</button>
-        <Person
-          name={this.state.persons[0].name}
-          age={this.state.persons[0].age} />
-        <Person
-          name={this.state.persons[1].name}
-          age={this.state.persons[1].age}
-          changed={this.nameChangedHandler} />
-        <Person
-          name={this.state.persons[2].name}
-          age={this.state.persons[2].age} />
-      </div>
+          <button onClick ={this.togglePeopleHandler}>Toggle People</button>
+      {people}
+    </div>
     );
   }
 }
