@@ -4,32 +4,25 @@ import Person from './Person/Person';
 
 class App extends Component {
   state = {
-    persons: [
-      { name: 'Max', age: 28},
-      { name: 'Manu', age: 29},
-      { name: 'Stephanie', age: 26}
+    people: [
+      { id: 'aaa', name: 'Max', age: 28},
+      { id: 'bbb', name: 'Manu', age: 29},
+      { id: 'ccc', name: 'Stephanie', age: 26}
     ],
     showPeople: true
   }
 
-  switchNameHandler = (newName) => {
-    this.setState({
-      persons: [
-        { name: newName, age: 28},
-        { name: 'Manu', age: 29},
-        { name: 'Stephanie', age: 27}
-      ]
-    })
-  }
+  nameChangedHandler = (event, id) => {
+    const personIndex = this.state.people.findIndex(person => {
+      return person.id === id;
+    });
 
-  nameChangedHandler = (event) => {
-    this.setState({
-      persons: [
-        { name: 'Max', age: 28},
-        { name: event.target.value, age: 29},
-        { name: 'Stephanie', age: 26}
-      ]
-    })
+    const selectedPerson = {...this.state.people[personIndex]};
+    selectedPerson.name = event.target.value;
+    const people = [...this.state.people];
+    people[personIndex] = selectedPerson;
+    
+    this.setState({ people });
   }
 
   togglePeopleHandler= () => {
@@ -39,17 +32,24 @@ class App extends Component {
     });
   }
 
+  deletePersonHandler = (index) => {
+    const people = [...this.state.people];
+    people.splice(index, 1);
+    this.setState({ people })
+  }
+
   render() {
-
     let people = null;
-
     if (this.state.showPeople) {
       people = (
         <div>
-          {this.state.persons.map(person => {
+          {this.state.people.map((person, index) => {
               return <Person
-                name={person.name}
-                age={person.age} />
+                name = { person.name }
+                age = { person.age }
+                click = { () => this.deletePersonHandler(index) }
+                key = { person.id }
+                changed = { (event) => this.nameChangedHandler(event, person.id) }/>
           })}
         </div>
       );
@@ -57,7 +57,7 @@ class App extends Component {
     return (
       <div className="App">
           <button onClick ={this.togglePeopleHandler}>Toggle People</button>
-      {people}
+          {people}
     </div>
     );
   }
