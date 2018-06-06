@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './Person.css';
-class person extends Component {
-
+class Person extends Component {
   render(){
     return (
       <div>
@@ -12,4 +11,4 @@ class person extends Component {
   }
 }
 
-export default person;
+export default Person;
