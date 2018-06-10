@@ -4,13 +4,16 @@ import People from '../components/People/People';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
-  state = {
-    people: [
-      { id: 'aaa', name: 'Max', age: 28},
-      { id: 'bbb', name: 'Manu', age: 29},
-      { id: 'ccc', name: 'Stephanie', age: 26}
-    ],
-    showPeople: true
+  constructor(props) {
+    super(props);
+    this.state = {
+      people: [
+        { id: 'aaa', name: 'Max', age: 28},
+        { id: 'bbb', name: 'Manu', age: 29},
+        { id: 'ccc', name: 'Stephanie', age: 26}
+      ],
+      showPeople: true
+    };
   }
 
   nameChangedHandler = (event, id) => {
